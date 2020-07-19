@@ -1,5 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <string.h>
 
 // Max voters and candidates
 #define MAX_VOTERS 100
@@ -131,9 +132,10 @@ bool vote(int voter, int rank, string name)
     for (int i = 0; i < candidate_count; i++)
     {
         // compare each candidate's name with the user given name. If match, update that particular voter's particular rank preference (provided from MAIN) with that candidate's number
-        if (strcmp(candidates[i].name, name) == 1)
+        if (strcmp(candidates[i].name, name) == 0)
         {
             preferences[voter][rank] = i;
+            return t
         }
     }
     return false;
@@ -182,7 +184,7 @@ int find_min(void)
     {
         if (candidates[i].eliminated == false && candidates[i].votes < minVotes)
         {
-            min = candidates[i].votes;
+            minVotes = candidates[i].votes;
         }
     }
     return minVotes;
@@ -192,10 +194,10 @@ int find_min(void)
 bool is_tie(int min)
 {
     // loop through all candidates
-    for (int i = 0; i < candidates_count; i++)
+    for (int i = 0; i < candidate_count; i++)
     {
             // if there is a non-eliminated candidates whose votes are not equal to the min, return false
-        if (candidates[i].eliminated == false && candidates[i].votes != minVotes)
+        if (candidates[i].eliminated == false && candidates[i].votes != min)
         {
             return false;  
         }
@@ -208,7 +210,12 @@ bool is_tie(int min)
 // Eliminate the candidate (or candidiates) in last place
 void eliminate(int min)
 {
-    // TODO
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes == min)
+        {
+            candidates[i].eliminated = true;
+        }
+    }
     return;
 }
-
